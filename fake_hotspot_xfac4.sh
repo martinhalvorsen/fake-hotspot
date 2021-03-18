@@ -175,8 +175,7 @@ while [ true ]; do
   1. Deploy Hotspot
   2. Deploy Hotspot (password protected)
   3. Monitor Netwokrs
-  4. SE-toolkit
-  5. Exit
+  4. Exit
   Enter option: " INPUT
 
   #if stamtnet for option to run
@@ -190,9 +189,6 @@ while [ true ]; do
     then read -p "Network interface: " INTERFACE; monitor_mode; airodump
 
   elif [ $INPUT = 4 ]
-    then echo "Under work"
-
-  elif [ $INPUT = 5 ]
     then echo "Exiting, good bye..."; break
 
   else echo "Input was not valid, try again";
