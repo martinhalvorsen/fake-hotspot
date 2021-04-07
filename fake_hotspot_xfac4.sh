@@ -16,13 +16,7 @@ monitor_mode()
   sudo airmon-ng check kill
   sudo airmon-ng start $INTERFACE
 }
-#################################################
-#stop interface montiormode
-monitor_mode_stop()
-{
-  $INTERFACE
-  sudo airmon-ng stop $INTERFACE_STOP
-}
+
 ##################################################
 #start airodump to start monitoring
 airodump()
@@ -31,6 +25,7 @@ airodump()
   INTERFACE_2=$INTERFACE"mon"
   x-terminal-emulator -e sudo airodump-ng $INTERFACE_2
 }
+
 ####################################################3
 #deplaoys fake hotspot using Hostapd and creating config file
 deploy_hotspot()
@@ -50,7 +45,6 @@ dhcp-option=6, 192.168.1.1
 server=8.8.8.8
 log-queries
 listen-address=127.0.0.1" > dnsmasq.conf
-
 
   while [ true ]; do
     echo " "
@@ -119,7 +113,6 @@ server=8.8.8.8
 log-queries
 listen-address=127.0.0.1" > dnsmasq.conf
 
-
   while [ true ]; do
     echo " "
     echo "To quit adding forwared host, press enter"
@@ -174,7 +167,7 @@ while [ true ]; do
 
   1. Deploy Hotspot
   2. Deploy Hotspot (password protected)
-  3. Monitor Netwokrs
+  3. Monitor Networks
   4. Exit
   Enter option: " INPUT
 

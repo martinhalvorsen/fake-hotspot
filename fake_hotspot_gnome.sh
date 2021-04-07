@@ -1,4 +1,3 @@
-#!/bin/bash
 
 echo "
 ███████╗░█████╗░██╗░░██╗███████╗░░░░░░██╗░░██╗░█████╗░████████╗░██████╗██████╗░░█████╗░████████╗
@@ -16,20 +15,14 @@ monitor_mode()
   sudo airmon-ng check kill
   sudo airmon-ng start $INTERFACE
 }
-#################################################
-#stop interface montiormode
-monitor_mode_stop()
-{
-  $INTERFACE
-  sudo airmon-ng stop $INTERFACE_STOP
-}
+
 ##################################################
 #start airodump to start monitoring
 airodump()
 {
   echo "starting airdump to start monitoring"
   INTERFACE_2=$INTERFACE"mon"
-  gnome-terminal --window --command="bash -c 'sudo airodump-ng $INTERFACE_2; $SHELL'"
+  gnome-terminal --window -- /bin/sh -c "sudo airodump-ng $INTERFACE_2"
 }
 ####################################################3
 #deplaoys fake hotspot using Hostapd and creating config file
@@ -51,7 +44,6 @@ server=8.8.8.8
 log-queries
 listen-address=127.0.0.1" > dnsmasq.conf
 
-
   while [ true ]; do
     echo " "
     echo "To quit adding forwared host, press enter"
@@ -68,7 +60,7 @@ listen-address=127.0.0.1" > dnsmasq.conf
     fi
   done
 
-  #kill processes runningin background
+  #kill processes running in background
   sudo killall dnsmasq &> /dev/null
   sudo killall hostapd &> /dev/null
 
@@ -80,7 +72,7 @@ macaddr_acl=0
 driver=nl80211
 ignore_broadcast_ssid=0" > hostapd.conf
 
-  #start dnsmaq to provide user with IP address
+  #setup wifi antenna with static Ip and GW
   sudo ifconfig $INTERFACE_HOTSPOT up 192.168.1.1 netmask 255.255.255.0
   sudo route add -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.1.1
 
@@ -118,7 +110,6 @@ dhcp-option=6, 192.168.1.1
 server=8.8.8.8
 log-queries
 listen-address=127.0.0.1" > dnsmasq.conf
-
 
   while [ true ]; do
     echo " "
@@ -166,13 +157,6 @@ rsn_pairwise=CCMP" > hostapd.conf
   gnome-terminal --window -- /bin/sh -c "sudo hostapd hostapd.conf"
 }
 
-Download_update()
-{
-  #installing and updateing tolls needed.
-  sudo apt-get install aircrack-ng
-  sudo apt-get install dnsmasq
-  sudo apt-get install hostapd
-}
 ####################################################
 #executes functions based on option chosen
 while [ true ]; do
@@ -181,7 +165,7 @@ while [ true ]; do
 
   1. Deploy Hotspot
   2. Deploy Hotspot (password protected)
-  3. Monitor Netwokrs
+  3. Monitor Networks
   4. Exit
   Enter option: " INPUT
 
